@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Bottle System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Wholesale Water Bottle System</h1>
+        <nav id="auth-nav">
+            <button id="show-signup">Sign Up</button>
+            <button id="show-signin">Sign In</button>
+        </nav>
+        <nav id="user-nav" style="display: none;">
+            <span id="welcome-msg"></span>
+            <button id="logout-btn">Log Out</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="auth-section" class="form-container">
+            <div id="signup-form">
+                <h2>Sign Up</h2>
+                <input type="text" id="signup-username" placeholder="Username">
+                <input type="password" id="signup-password" placeholder="Password">
+                <select id="signup-role">
+                    <option value="buyer">Buyer</option>
+                    <option value="seller">Seller</option>
+                </select>
+                <button id="signup-btn">Sign Up</button>
+                <p id="signup-message"></p>
+            </div>
+
+            <div id="signin-form" style="display: none;">
+                <h2>Sign In</h2>
+                <input type="text" id="signin-username" placeholder="Username">
+                <input type="password" id="signin-password" placeholder="Password">
+                <button id="signin-btn">Sign In</button>
+                <p id="signin-message"></p>
+            </div>
+        </section>
+
+        <section id="seller-dashboard" class="dashboard" style="display: none;">
+            <h2>Seller Dashboard</h2>
+            <div class="form-container">
+                <h3>Add New Listing</h3>
+                <input type="text" id="seller-model-name" placeholder="Model Name"> <input type="number" id="seller-quantity" placeholder="Quantity (bottles)">
+                <input type="number" id="seller-price" step="0.01" placeholder="Price per bottle ($)">
+                <button id="add-product-btn">Add Product</button>
+                <p id="seller-message"></p>
+            </div>
+        </section>
+
+        <section id="buyer-dashboard" class="dashboard" style="display: none;">
+            <h2>Buyer Dashboard</h2>
+            <h3>Available Listings</h3>
+            <p id="buyer-message"></p>
+            <div id="listings-container" class="listings-grid"></div>
+        
+            <hr>
+            
+            <div id="cart-section" style="margin-top: 2rem;">
+                <h3>My Cart</h3>
+                <p id="cart-message"></p>
+                <div id="cart-container" class="listings-grid"></div>
+                <button id="checkout-btn" style="display: none; margin-top: 1rem;">Checkout</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
