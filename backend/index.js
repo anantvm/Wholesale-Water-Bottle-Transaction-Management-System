@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const { Pool } = require('pg');
 const bcrypt = require('bcryptjs');
@@ -12,14 +14,14 @@ app.use(express.json());
 
 // Replace with your actual database credentials
 const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'Wholesale Water Bottle Transaction Management System',
-    password: '1234',
-    port: 5435,
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_DATABASE,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
 });
 
-const JWT_SECRET = 'secret_key'; // Replace with a strong, random key
+const JWT_SECRET = process.env.JWT_SECRET; // Replace with a strong, random key
 
 // Middleware to verify JWT token
 const authenticateToken = (req, res, next) => {
