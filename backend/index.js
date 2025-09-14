@@ -80,14 +80,14 @@ app.post('/api/seller/products', authenticateToken, async (req, res) => {
     if (req.user.role !== 'seller') {
         return res.status(403).json({ message: 'Access denied: Not a seller' });
     }
-    const { quantity, price, model_name } = req.body; // <-- Changed variable name
+    const { quantity, price, model_name } = req.body;
     const seller_id = req.user.id;
     try {
         const result = await pool.query(
-            'INSERT INTO products (seller_id, quantity, price, model_name) VALUES ($1, $2, $3, $4) RETURNING *', // <-- Changed column name
-            [seller_id, quantity, price, model_name] // <-- Changed variable name
+            'INSERT INTO products (seller_id, quantity, price, model_name) VALUES ($1, $2, $3, $4) ON CONFLICT (seller_id, model_name, price) DO UPDATE SET quantity = products.quantity + EXCLUDED.quantity RETURNING *',
+            [seller_id, quantity, price, model_name]
         );
-        res.status(201).json({ message: 'Product added successfully', product: result.rows[0] });
+        res.status(201).json({ message: 'Product updated successfully', product: result.rows[0] });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
@@ -263,6 +263,111 @@ app.post('/api/buyer/checkout', authenticateToken, async (req, res) => {
         res.status(500).json({ message: 'Checkout failed. Please try again.', error: error.message });
     } finally {
         client.release();
+    }
+});
+
+
+// Seller: Get their own product listings (inventory)
+app.get('/api/seller/inventory', authenticateToken, async (req, res) => {
+    if (req.user.role !== 'seller') {
+        return res.status(403).json({ message: 'Access denied: Not a seller' });
+    }
+    const seller_id = req.user.id;
+    try {
+        const result = await pool.query(
+            'SELECT id, model_name, quantity, price FROM products WHERE seller_id = $1 ORDER BY created_at DESC',
+            [seller_id]
+        );
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// Seller: Get their order history and total revenue
+app.get('/api/seller/orders', authenticateToken, async (req, res) => {
+    if (req.user.role !== 'seller') {
+        return res.status(403).json({ message: 'Access denied: Not a seller' });
+    }
+    const seller_id = req.user.id;
+    try {
+        // Fetch all orders received by this seller
+        const ordersResult = await pool.query(`
+            SELECT
+                o.id,
+                o.quantity,
+                o.price as total_amount,
+                o.order_date,
+                p.model_name,
+                u.username as buyer_name
+            FROM orders o
+            JOIN products p ON o.product_id = p.id
+            JOIN users u ON o.buyer_id = u.id
+            WHERE o.seller_id = $1
+            ORDER BY o.order_date DESC
+        `, [seller_id]);
+
+        // Calculate total revenue from these orders
+        const totalRevenueResult = await pool.query(
+            'SELECT SUM(price) as total_revenue FROM orders WHERE seller_id = $1',
+            [seller_id]
+        );
+
+        const totalRevenue = totalRevenueResult.rows[0].total_revenue || 0;
+
+        res.json({
+            orders: ordersResult.rows,
+            totalRevenue: parseFloat(totalRevenue)
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+
+// Buyer: Get their order history
+app.get('/api/buyer/orders', authenticateToken, async (req, res) => {
+    if (req.user.role !== 'buyer') {
+        return res.status(403).json({ message: 'Access denied: Not a buyer' });
+    }
+    const buyer_id = req.user.id;
+    try {
+        const result = await pool.query(`
+            SELECT
+                o.id,
+                o.quantity,
+                o.price as total_amount,
+                o.order_date,
+                p.model_name,
+                u.username as seller_name
+            FROM orders o
+            JOIN products p ON o.product_id = p.id
+            JOIN users u ON o.seller_id = u.id
+            WHERE o.buyer_id = $1
+            ORDER BY o.order_date DESC
+        `, [buyer_id]);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+
+// Buyer: Clear their cart
+app.delete('/api/buyer/cart', authenticateToken, async (req, res) => {
+    if (req.user.role !== 'buyer') {
+        return res.status(403).json({ message: 'Access denied: Not a buyer' });
+    }
+    const buyer_id = req.user.id;
+    try {
+        await pool.query('DELETE FROM carts WHERE buyer_id = $1', [buyer_id]);
+        res.status(200).json({ message: 'Cart has been cleared' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
     }
 });
 

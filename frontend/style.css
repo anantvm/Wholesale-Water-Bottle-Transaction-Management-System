@@ -108,3 +108,213 @@ main {
     cursor: pointer;
     border-radius: 5px;
 }
+
+#orders-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#orders-container li {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+}
+
+.orders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.order-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    background: #fafafa;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #eef2f7;
+    color: #334e68;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: #187bcd; /* A vibrant blue */
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+h2, h3, h4 {
+    color: #187bcd;
+}
+
+nav button {
+    background: #fff;
+    color: #187bcd;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav button:hover {
+    background: #dceefc;
+    color: #187bcd;
+}
+
+
+
+main {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 2.5rem auto;
+    background: #F5EFE6; /* A very light, almost white grey */
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.form-container, .dashboard {
+    padding: 2rem;
+    border: none;
+    border-radius: 12px;
+}
+
+.form-container input, .form-container select, .form-container button {
+    display: block;
+    width: 100%;
+    margin-bottom: 1.25rem;
+    padding: 1rem;
+    border: 1px solid #cdd5e0;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.form-container button {
+    background: #28a745;
+    color: white;
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.form-container button:hover {
+    background: #218838;
+}
+
+.product-card, .order-card {
+    border: 1px solid #e0e6ec; /* Slightly darker border for better definition */
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: left;
+    background: #ffffff; /* Pure white for card background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover, .order-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.product-card h4, .order-card h4 {
+    margin-top: 0;
+    color: #187bcd;
+    font-size: 1.1rem;
+}
+
+.product-card p, .order-card p {
+    margin: 0.5rem 0;
+    color: #556e89;
+    font-size: 0.95rem;
+}
+
+.product-card button {
+    background: #187bcd;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.product-card button:hover {
+    background: #1263a2;
+}
+
+#total-revenue {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #28a745;
+}
+
+#auth-nav, #user-nav {
+    display: flex;
+    gap: 1rem; /* Adjust this value to increase/decrease the space */
+    align-items: center;
+}
+
+
+.cart-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+#clear-cart-btn {
+    background: #dc3545; /* Red color for a delete action */
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+#clear-cart-btn:hover {
+    background: #c82333;
+}
+
+
+.section-box {
+    background: #E8DFCA;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.section-box h3 {
+    margin-top: 0;
+    color: #187bcd;
+}
+
+
+.dashboard-section {
+    background: #fdfeff; /* Or #fff if you prefer the light theme */
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgb(255, 254, 254);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}

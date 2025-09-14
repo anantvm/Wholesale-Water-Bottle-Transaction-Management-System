@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Water Bottle System</title>
+    <title>Wholesale Management System</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Wholesale Water Bottle System</h1>
+        <h1>Wholesale Water Bottle Transaction Management System</h1>
         <nav id="auth-nav">
             <button id="show-signup">Sign Up</button>
             <button id="show-signin">Sign In</button>
@@ -44,28 +44,55 @@
 
         <section id="seller-dashboard" class="dashboard" style="display: none;">
             <h2>Seller Dashboard</h2>
-            <div class="form-container">
+        
+            <div class="dashboard-section">
                 <h3>Add New Listing</h3>
-                <input type="text" id="seller-model-name" placeholder="Model Name"> <input type="number" id="seller-quantity" placeholder="Quantity (bottles)">
-                <input type="number" id="seller-price" step="0.01" placeholder="Price per bottle ($)">
-                <button id="add-product-btn">Add Product</button>
-                <p id="seller-message"></p>
+                <div class="form-container">
+                    <input type="text" id="seller-model-name" placeholder="Model Name">
+                    <input type="number" id="seller-quantity" placeholder="Quantity (bottles)">
+                    <input type="number" id="seller-price" step="0.01" placeholder="Price per bottle ($)">
+                    <button id="add-product-btn">Add Product</button>
+                    <p id="seller-message"></p>
+                </div>
+            </div>
+            
+            <div class="dashboard-section">
+                <h3>My Inventory</h3>
+                <div id="inventory-container" class="listings-grid"></div>
+                <p id="inventory-message"></p>
+            </div>
+        
+            <div class="dashboard-section">
+                <h3>My Order History</h3>
+                <div id="orders-container"></div>
+                <p><strong>Total Revenue: </strong><span id="total-revenue">$0.00</span></p>
+                <p id="orders-message"></p>
             </div>
         </section>
 
         <section id="buyer-dashboard" class="dashboard" style="display: none;">
             <h2>Buyer Dashboard</h2>
-            <h3>Available Listings</h3>
-            <p id="buyer-message"></p>
-            <div id="listings-container" class="listings-grid"></div>
         
-            <hr>
-            
-            <div id="cart-section" style="margin-top: 2rem;">
+            <div class="section-box">
+                <h3>Available Listings</h3>
+                <p id="buyer-message"></p>
+                <div id="listings-container" class="listings-grid"></div>
+            </div>
+        
+            <div class="section-box">
                 <h3>My Cart</h3>
                 <p id="cart-message"></p>
                 <div id="cart-container" class="listings-grid"></div>
-                <button id="checkout-btn" style="display: none; margin-top: 1rem;">Checkout</button>
+                <div class="cart-actions" style="display: none; margin-top: 1rem;">
+                    <button id="clear-cart-btn">Clear Cart</button>
+                    <button id="checkout-btn">Checkout</button>
+                </div>
+            </div>
+        
+            <div class="section-box">
+                <h3>My Buying History</h3>
+                <div id="buying-history-container"></div>
+                <p id="buying-history-message"></p>
             </div>
         </section>
     </main>
